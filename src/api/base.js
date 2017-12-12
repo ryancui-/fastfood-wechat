@@ -1,1 +1,1 @@
-export default 'https://imtouch.info/fastfood/api';
+export default 'http://localhost:8360/fastfood/api';

@@ -23,7 +23,8 @@
 </template>
 
 <script>
-  import { Group, XInput, XButton } from 'vux';
+  import { Group, XInput, XButton, Toast } from 'vux';
+  import md5 from 'js-md5';
   import authService from '@/api/auth';
 
   export default {
@@ -37,8 +38,21 @@
     },
     methods: {
       login() {
-        authService.login(this.params).then(res => {
-          console.log(res);
+        const params = Object.assign({}, this.params);
+        params.password = md5(params.password);
+
+        // 显示
+        this.$vux.loading.show({
+          text: 'Loading'
+        });
+        authService.login(params).then(res => {
+          this.$vux.loading.hide();
+
+          if (res.errno === 0) {
+            // TODO 登陆成功，跳转到首页
+          } else {
+            this.$vux.toast.text(res.errmsg, 'middle');
+          }
         });
       }
     },
