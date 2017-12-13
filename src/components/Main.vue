@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header :left-options="{showBack: false}" :title="mainTitle"></x-header>
-    <router-view></router-view>
+    <router-view class="main-content"></router-view>
     <tabbar>
       <tabbar-item link="/main/groups" :selected="url === '/main/groups'">
         <span slot="label">点餐</span>
@@ -38,5 +38,12 @@
 </script>
 
 <style scoped>
-
+  .main-content {
+    position: absolute;
+    top: 46px;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    overflow-y: auto;
+  }
 </style>
