@@ -18,6 +18,21 @@ class AuthService extends BaseService {
       return res;
     });
   }
+
+  /**
+   * 退出登录
+   * @return {Promise}
+   */
+  logout() {
+    return new Promise(resolve => {
+      localStorage.removeItem('token');
+
+      store.commit('resetToken');
+      store.commit('resetUser');
+
+      resolve();
+    });
+  }
 }
 
 export default new AuthService();
