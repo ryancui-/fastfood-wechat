@@ -1,13 +1,12 @@
-import axios from 'axios';
-import base from './base';
+import BaseService from './base';
 
-class ProfileService {
+class ProfileService extends BaseService {
   /**
    * 获取登录用户信息
    * @return {AxiosPromise<T>}
    */
   profile() {
-    return axios.get(base + '/profile');
+    return this.get('/profile');
   }
 }
 

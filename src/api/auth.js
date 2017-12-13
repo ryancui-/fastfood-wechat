@@ -1,15 +1,14 @@
-import axios from 'axios';
-import base from './base';
 import store from '@/store';
+import BaseService from './base';
 
-class AuthService {
+class AuthService extends BaseService {
   /**
    * 登录
    * @param params
    * @returns {AxiosPromise<T>}
    */
   login(params) {
-    return axios.post(base + '/auth/login', params).then(res => {
+    return this.post('/auth/login', params).then(res => {
       if (res.errno === 0) {
         localStorage.setItem('token', res.data.token);
 
