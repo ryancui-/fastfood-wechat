@@ -7,6 +7,7 @@ import Main from '@/components/Main';
 import GroupsPage from '@/components/GroupsPage';
 import ProfilePage from '@/components/ProfilePage';
 import OrdersPage from '@/components/OrdersPage';
+import ProductsPage from '@/components/ProductsPage';
 
 import profileService from '@/api/profile';
 
@@ -34,6 +35,9 @@ const routes = [{
 }, {
   path: '/orders/:groupId',
   component: OrdersPage
+}, {
+  path: '/products/group/:groupId',
+  component: ProductsPage
 }];
 
 const router = new Router({

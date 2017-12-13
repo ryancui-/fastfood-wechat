@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div v-if="orders.length === 0" class="orders-none">
+      <div v-if="orders.length === 0" class="none-tips">
         不存在的
       </div>
       <group v-for="order in orders" :key="order.user.id">
@@ -101,7 +101,7 @@
       },
       // 跳转到添加订单页面
       navigateToProducts() {
-        // TODO
+        this.$router.push(`/products/group/${this.group.id}`);
       },
       // 确认是否删除订单
       confirmDelete(order) {
@@ -134,7 +134,7 @@
     margin-top: 20px;
   }
 
-  .orders-none {
+  .none-tips {
     text-align: center;
     font-size: 1rem;
     color: #aaa;

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="groups.length === 0" class="none-tips">
+      不存在的
+    </div>
     <div v-for="group in groups" class="group" @click="navigateToOrders(group)">
       <div class="group-line">
         <f-avatar :src="group.composer.avatar_url" :size="2"></f-avatar>
@@ -66,5 +69,12 @@
     display: flex;
     align-items: center;
     margin: 0.5rem 0;
+  }
+
+  .none-tips {
+    text-align: center;
+    font-size: 1rem;
+    color: #aaa;
+    padding: 20px;
   }
 </style>
