@@ -10,6 +10,7 @@ import OrdersPage from '@/components/OrdersPage';
 import ProductsPage from '@/components/ProductsPage';
 
 import profileService from '@/api/profile';
+import authService from '@/api/auth';
 
 Vue.use(Router);
 
@@ -55,8 +56,14 @@ router.beforeEach((to, from, next) => {
     store.commit('setToken', token);
     if (store.state.user.id === undefined) {
       profileService.profile().then(res => {
-        store.commit('setUser', res.data);
-        next();
+        if (res.errno === 0) {
+          store.commit('setUser', res.data);
+          next();
+        } else {
+          authService.logout().then(() => {
+            next('/login');
+          });
+        }
       });
     } else {
       next();
