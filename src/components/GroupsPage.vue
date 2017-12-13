@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="group in groups" class="group">
+    <div v-for="group in groups" class="group" @click="navigateToOrders(group)">
       <div class="group-line">
         <img :src="group.composer.avatar_url || 'static/avatar.png'" alt="头像" class="avatar">
         <span>{{group.composer.username}}</span>
@@ -32,7 +32,7 @@
       // 获取订单团列表
       listActiveGroup() {
         this.$vux.loading.show({
-          text: 'Loading'
+          text: '加载中'
         });
 
         groupService.listActiveGroup().then(({errno, data}) => {
@@ -41,6 +41,10 @@
             this.groups = data;
           }
         });
+      },
+      // 跳转到订单团详情页面
+      navigateToOrders(group) {
+        this.$router.push(`/orders/${group.id}`);
       }
     }
   }
@@ -51,6 +55,7 @@
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;
     box-shadow: #e2e2e2 0 0.5rem 0.5rem;
+    background-color: white;
   }
 
   .group-line {

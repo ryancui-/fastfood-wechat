@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store';
+
 import Login from '@/components/Login';
 import Main from '@/components/Main';
 import GroupsPage from '@/components/GroupsPage';
 import ProfilePage from '@/components/ProfilePage';
+import OrdersPage from '@/components/OrdersPage';
 
 import profileService from '@/api/profile';
 
@@ -29,6 +31,9 @@ const routes = [{
     path: 'profile',
     component: ProfilePage
   }]
+}, {
+  path: '/orders/:groupId',
+  component: OrdersPage
 }];
 
 const router = new Router({

@@ -8,6 +8,14 @@ class GroupService extends BaseService {
   listActiveGroup() {
     return this.get('/group/listActive');
   }
+
+  /**
+   * 获取订单团详细信息
+   * @param groupId
+   */
+  getGroupDetail(groupId) {
+    return this.get(`/group/get?id=${groupId}`);
+  }
 }
 
 export default new GroupService();
