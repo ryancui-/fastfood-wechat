@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="avatar-block">
-      <img :src="user.avatar_url || 'static/avatar.png'" class="avatar">
-      <span>{{user.username}}</span>
+      <f-avatar :src="user.avatar_url" :size="5"></f-avatar>
+      <span style="margin-top: 1rem;">{{user.username}}</span>
     </div>
     <group>
       <cell title="退出登录" :is-link="true" @click.native="logout"></cell>
@@ -13,11 +13,12 @@
 <script>
   import { mapState } from 'vuex';
   import { Group, Cell } from 'vux';
+  import FAvatar from '@/components/common/FAvatar';
   import authService from '@/api/auth';
 
   export default {
     components: {
-      Group, Cell
+      Group, Cell, FAvatar
     },
     created() {
       this.$store.commit('setMainTitle', '我的信息');
@@ -43,12 +44,5 @@
     align-items: center;
     justify-content: center;
     height: 40%;
-  }
-
-  .avatar {
-    height: 5rem;
-    width: 5rem;
-    border-radius: 2.5rem;
-    margin-bottom: 1rem;
   }
 </style>

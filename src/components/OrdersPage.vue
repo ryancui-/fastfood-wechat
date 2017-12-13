@@ -8,8 +8,8 @@
     <div>
       <div class="group-overview">
         <div class="group-line">
-          <img :src="group.composer.avatar_url || 'static/avatar.png'" alt="头像" class="avatar">
-          <span style="flex: 1;">{{group.composer.username}}</span>
+          <f-avatar :src="group.composer.avatar_url" :size="2"></f-avatar>
+          <span style="flex: 1;margin-left: 0.5rem;">{{group.composer.username}}</span>
           <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{group.totalPrice}}</span>
         </div>
         <div class="group-line">
@@ -25,8 +25,8 @@
       </div>
       <group v-for="order in orders" :key="order.user.id">
         <div slot="title" class="order-user">
-          <img :src="order.user.avatar_url || 'static/avatar.png'" alt="头像" class="avatar">
-          <span style="flex: 1;">{{order.user.username}}</span>
+          <f-avatar :src="order.user.avatar_url" :size="2"></f-avatar>
+          <span style="flex: 1;margin-left: 0.5rem;">{{order.user.username}}</span>
           <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{order.totalPrice}}</span>
         </div>
         <cell v-for="row in order.rows"
@@ -45,11 +45,12 @@
 
 <script>
   import { XHeader, Group, Cell } from 'vux';
+  import FAvatar from '@/components/common/FAvatar';
   import groupService from '@/api/group';
 
   export default {
     components: {
-      XHeader, Group, Cell
+      XHeader, Group, Cell, FAvatar
     },
     created() {
       this.getGroupDetail(this.$route.params.groupId);
@@ -131,13 +132,6 @@
     margin-left: 1rem;
     margin-right: 1rem;
     margin-top: 20px;
-  }
-
-  .avatar {
-    height: 2rem;
-    width: 2rem;
-    border-radius: 1rem;
-    margin-right: 0.5rem;
   }
 
   .orders-none {

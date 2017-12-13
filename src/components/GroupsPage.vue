@@ -2,8 +2,8 @@
   <div>
     <div v-for="group in groups" class="group" @click="navigateToOrders(group)">
       <div class="group-line">
-        <img :src="group.composer.avatar_url || 'static/avatar.png'" alt="头像" class="avatar">
-        <span>{{group.composer.username}}</span>
+        <f-avatar :src="group.composer.avatar_url" :size="2"></f-avatar>
+        <span style="margin-left: 0.5rem;">{{group.composer.username}}</span>
       </div>
       <div class="group-line">
         <span>{{group.name}}</span>
@@ -17,8 +17,12 @@
 
 <script>
   import groupService from '@/api/group';
+  import FAvatar from '@/components/common/FAvatar';
 
   export default {
+    components: {
+      FAvatar
+    },
     created() {
       this.$store.commit('setMainTitle', '点餐中');
       this.listActiveGroup();
@@ -62,12 +66,5 @@
     display: flex;
     align-items: center;
     margin: 0.5rem 0;
-  }
-
-  .avatar {
-    height: 2rem;
-    width: 2rem;
-    border-radius: 1rem;
-    margin-right: 0.5rem;
   }
 </style>
