@@ -47,16 +47,19 @@
   import { XHeader, Group, Cell } from 'vux';
   import FAvatar from '@/components/common/FAvatar';
   import groupService from '@/api/group';
+  import orderService from '@/api/order';
 
   export default {
     components: {
       XHeader, Group, Cell, FAvatar
     },
     created() {
-      this.getGroupDetail(this.$route.params.groupId);
+      this.groupId = this.$route.params.groupId;
+      this.getGroupDetail();
     },
     data() {
       return {
+        groupId: null,
         group: {
           composer: {}
         },
@@ -65,11 +68,11 @@
     },
     methods: {
       // 加载订单团详情
-      getGroupDetail(groupId) {
+      getGroupDetail() {
         this.$vux.loading.show({
           text: '加载中'
         });
-        groupService.getGroupDetail(groupId).then(({data}) => {
+        groupService.getGroupDetail(this.groupId).then(({data}) => {
           this.$vux.loading.hide();
           this.group = data;
           this.initOrders(data.orders);
@@ -105,8 +108,21 @@
       },
       // 确认是否删除订单
       confirmDelete(order) {
-        // TODO
-        console.log(order);
+        const that = this;
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '是否删除该订单？',
+          onCancel () {
+          },
+          onConfirm () {
+            orderService.remove(order.id).then(res => {
+              if (res.errno === 0) {
+                that.$vux.toast.text('删除成功', 'middle');
+                that.getGroupDetail();
+              }
+            });
+          }
+        });
       }
     }
   }

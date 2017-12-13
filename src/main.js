@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import axios from 'axios';
-import { LoadingPlugin, ToastPlugin } from 'vux';
+import { ConfirmPlugin, LoadingPlugin, ToastPlugin } from 'vux';
 
 import App from './App';
 import router from './router';
@@ -15,6 +15,7 @@ Vue.config.productionTip = false;
 
 Vue.use(ToastPlugin);
 Vue.use(LoadingPlugin);
+Vue.use(ConfirmPlugin);
 
 // axios 拦截器
 axios.interceptors.request.use(function (config) {

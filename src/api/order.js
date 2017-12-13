@@ -8,6 +8,16 @@ class OrderService extends BaseService {
   add(params) {
     return this.post('/order/create', params);
   }
+
+  /**
+   * 删除订单
+   * @param orderId
+   */
+  remove(orderId) {
+    return this.post('/order/remove', {
+      id: orderId
+    });
+  }
 }
 
 export default new OrderService();
