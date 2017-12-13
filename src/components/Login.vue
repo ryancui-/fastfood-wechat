@@ -4,7 +4,7 @@
       <div style="text-align: center;font-size: 2rem;">
         FastFood!
       </div>
-      <Group label-width="90px">
+      <group label-width="90px">
         <x-input title="用户名"
                  placeholder="输入用户名"
                  v-model="params.username"
@@ -14,9 +14,9 @@
                  title="密码"
                  v-model="params.password"
                  :required="true"></x-input>
-      </Group>
+      </group>
       <div class="btn">
-        <XButton type="primary" @click.native="login()">登录</XButton>
+        <x-button type="primary" @click.native="login()">登录</x-button>
       </div>
     </div>
   </div>
@@ -28,6 +28,9 @@
   import authService from '@/api/auth';
 
   export default {
+    components: {
+      Group, XInput, XButton
+    },
     data() {
       return {
         params: {
@@ -49,15 +52,12 @@
           this.$vux.loading.hide();
 
           if (res.errno === 0) {
-            // TODO 登陆成功，跳转到首页
+            this.$router.push('main/groups');
           } else {
             this.$vux.toast.text(res.errmsg, 'middle');
           }
         });
       }
-    },
-    components: {
-      Group, XInput, XButton
     }
   };
 </script>

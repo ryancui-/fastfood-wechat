@@ -9,7 +9,10 @@ const store = new Vuex.Store({
     // JWT token
     token: '',
     // user info
-    user: {}
+    user: {},
+
+    // 主界面 title
+    mainTitle: ''
   },
   mutations: {
     // 设置 token
@@ -26,6 +29,11 @@ const store = new Vuex.Store({
     },
     resetUser(state) {
       state.user = {};
+    },
+
+    // 设置主界面 title
+    setMainTitle(state, payload) {
+      state.mainTitle = payload;
     }
   }
 });

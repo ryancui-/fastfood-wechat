@@ -11,6 +11,8 @@ class AuthService {
   login(params) {
     return axios.post(base + '/auth/login', params).then(res => {
       if (res.errno === 0) {
+        localStorage.setItem('token', res.data.token);
+
         store.commit('setToken', res.data.token);
         store.commit('setUser', res.data.userInfo);
       }
