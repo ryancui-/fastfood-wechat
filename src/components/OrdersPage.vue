@@ -44,6 +44,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import { XHeader, Group, Cell } from 'vux';
   import FAvatar from '@/components/common/FAvatar';
   import groupService from '@/api/group';
@@ -108,6 +109,10 @@
       },
       // 确认是否删除订单
       confirmDelete(order) {
+        if (order.user_id !== this.user.id) {
+          return;
+        }
+
         const that = this;
         this.$vux.confirm.show({
           title: '提示',
@@ -124,6 +129,9 @@
           }
         });
       }
+    },
+    computed: {
+      ...mapState(['user'])
     }
   }
 </script>
