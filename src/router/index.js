@@ -42,6 +42,8 @@ const routes = [{
 }];
 
 const router = new Router({
+  mode: 'history',
+  base: window.location.pathName,
   routes
 });
 
