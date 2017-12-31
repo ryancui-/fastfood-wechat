@@ -42,17 +42,54 @@ const routes = [{
 }];
 
 const router = new Router({
-  mode: 'history',
-  base: window.location.pathName,
   routes
+});
+
+const historyStack = [];
+let isPush = false;
+let endTime = Date.now();
+let methods = ['push', 'go', 'replace', 'forward', 'back'];
+
+document.addEventListener('touchend', () => {
+  endTime = Date.now();
+});
+methods.forEach(key => {
+  let method = router[key].bind(router);
+  router[key] = function (...args) {
+    isPush = true;
+    method.apply(null, args);
+  };
 });
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
+  console.log('Before', historyStack);
+  const toIndex = historyStack.indexOf(to.path);
+
+  if (toIndex !== -1) {
+    // 判断是否是ios左滑返回
+    if (!isPush && (Date.now() - endTime) < 377) {
+      store.commit('updateDirection', {direction: ''});
+    } else {
+      store.commit('updateDirection', {direction: 'reverse'});
+    }
+
+    // 将回退之后的记录全部删掉
+    historyStack.splice(toIndex + 1, historyStack.length - toIndex);
+  } else {
+    if (historyStack.length > 0) {
+      store.commit('updateDirection', {direction: 'forward'});
+    } else {
+      store.commit('updateDirection', {direction: ''});
+    }
+    historyStack.push(to.path);
+  }
+  console.log('After', historyStack);
+
+
   if (to.path === '/login') {
     next();
   }
-
   const token = store.state.token || localStorage.getItem('token');
   if (token) {
     store.commit('setToken', token);
@@ -73,6 +110,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next('/login');
   }
+});
+
+router.afterEach(function (to) {
+  isPush = false;
 });
 
 export default router;

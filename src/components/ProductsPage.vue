@@ -1,7 +1,5 @@
 <template>
   <div>
-    <x-header :left-options="{backText: '返回'}" title="菜单"></x-header>
-
     <div class="product-list">
       <group title="菜单列表">
         <cell v-for="product in products"
@@ -63,6 +61,8 @@
       XHeader, Group, Cell, Popup, XButton, InlineXNumber, Checker, CheckerItem
     },
     created() {
+      this.$store.commit('setMainTitle', '菜单');
+
       this.groupId = Number(this.$route.params.groupId);
       if (!this.groupId) {
         this.$vux.toast.text('没有选择订单团', 'bottom');
@@ -135,15 +135,6 @@
 </script>
 
 <style scoped>
-  .product-list {
-    position: absolute;
-    top: 46px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-  }
-
   .order-block {
     background-color: #fff;
     margin: 0 auto;

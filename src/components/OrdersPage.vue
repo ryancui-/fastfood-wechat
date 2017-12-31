@@ -1,10 +1,5 @@
 <template>
   <div>
-    <x-header :left-options="{backText: '返回'}" title="订单团详情">
-      <div slot="right" @click="navigateToProducts">
-        <span>点餐</span>
-      </div>
-    </x-header>
     <div>
       <div class="group-overview">
         <div class="group-line">
@@ -55,7 +50,10 @@
       XHeader, Group, Cell, FAvatar
     },
     created() {
+      this.$store.commit('setMainTitle', '订单团');
+
       this.groupId = this.$route.params.groupId;
+      this.$store.commit('updateGroupId', {groupId: this.groupId});
       this.getGroupDetail();
     },
     data() {
@@ -102,10 +100,6 @@
 
         this.orders = result;
         this.group.totalPrice = orders.map(o => o.total_price).reduce((p, c) => p + c, 0);
-      },
-      // 跳转到添加订单页面
-      navigateToProducts() {
-        this.$router.push(`/products/group/${this.group.id}`);
       },
       // 确认是否删除订单
       confirmDelete(order) {
