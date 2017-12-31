@@ -27,7 +27,7 @@
       logout() {
         authService.logout().then(() => {
           this.$vux.toast.text('已退出登录', 'middle');
-          this.$router.push('/login');
+          this.$router.replace('/login');
         });
       }
     },
@@ -39,6 +39,7 @@
 
 <style scoped>
   .avatar-block {
+    margin: 70px 0;
     display: flex;
     flex-direction: column;
     align-items: center;

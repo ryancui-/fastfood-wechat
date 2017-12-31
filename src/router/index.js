@@ -45,7 +45,7 @@ const router = new Router({
   routes
 });
 
-const historyStack = [];
+let historyStack = [];
 let isPush = false;
 let endTime = Date.now();
 let methods = ['push', 'go', 'replace', 'forward', 'back'];
@@ -66,7 +66,10 @@ router.beforeEach((to, from, next) => {
   console.log('Before', historyStack);
   const toIndex = historyStack.indexOf(to.path);
 
-  if (toIndex !== -1) {
+  if (to.path === '/login') {
+    store.commit('updateDirection', {direction: historyStack.length === 0 ? '' : 'forward'});
+    historyStack = ['/login'];
+  } else if (toIndex !== -1) {
     // 判断是否是ios左滑返回
     if (!isPush && (Date.now() - endTime) < 377) {
       store.commit('updateDirection', {direction: ''});

@@ -1,9 +1,6 @@
 <template>
   <div class="wrapper">
     <div style="height: 50%;">
-      <div style="text-align: center;font-size: 2rem;">
-        FastFood!
-      </div>
       <group label-width="90px">
         <x-input title="用户名"
                  placeholder="输入用户名"
@@ -52,7 +49,7 @@
           this.$vux.loading.hide();
 
           if (res.errno === 0) {
-            this.$router.push('main/groups');
+            this.$router.replace('/main/groups');
           } else {
             this.$vux.toast.text(res.errmsg, 'middle');
           }

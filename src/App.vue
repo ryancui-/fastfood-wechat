@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <x-header :left-options="showBackOption" :title="mainTitle">
+    <x-header :left-options="showBackOption" :title="mainTitle" v-if="url !== '/login'">
       <div v-if="url.startsWith('/orders')" slot="right" @click="navigateToProducts">
         <span>点餐</span>
       </div>
@@ -31,8 +31,8 @@
       },
       showBackOption() {
         return {
-          backText: '返回',
-          showBack: !['/main/groups', '/main/profile'].includes(this.$route.fullPath)
+          backText: '',
+          showBack: !['/main/groups', '/main/profile', '/', '/login'].includes(this.$route.fullPath)
         }
       },
       viewTransition() {
