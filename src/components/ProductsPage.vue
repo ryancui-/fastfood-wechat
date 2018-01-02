@@ -1,12 +1,15 @@
 <template>
   <div>
     <div class="product-list">
-      <group title="菜单列表">
-        <cell v-for="product in products"
+      <group v-for="category in productCategories"
+             :key="category"
+             :title="category">
+        <cell v-for="product in filterProducts(category)"
               :key="product.id"
               @click.native="showOrderAction(product)">
           <div slot="title">
             <span>{{product.name}}</span>
+            <span v-if="product.spicy">🌶</span>
           </div>
           <div>
             <span>￥{{product.price}}</span>
@@ -27,7 +30,7 @@
           </cell>
           <cell v-if="selectedProduct.product_options.length !== 0"
                 title="选项" :value="remark" is-link @click.native="showOptionPopup = !showOptionPopup;"></cell>
-          <cell title="总价" :value="selectedProduct.price * quantity"></cell>
+          <cell title="总价" :value="'￥' + selectedProduct.price * quantity"></cell>
         </group>
         <div style="padding:20px 15px;">
           <x-button type="primary" @click.native="confirmOrder">确定</x-button>
@@ -73,6 +76,9 @@
     },
     data() {
       return {
+        productCategories: [
+          '每旬菜式', '热销菜式', '明炉烧味', '滋补炖品', '天天靓汤', '港式粉面', '冷热饮品', '原盅蒸饭'
+        ],
         groupId: null,
         products: [],
         showPopup: false,
@@ -88,7 +94,7 @@
       // 加载当天菜单列表
       listTodayProducts() {
         this.$vux.loading.show({
-          text: '加载菜单中'
+          text: '加载中'
         });
         productService.listToday().then(res => {
           this.$vux.loading.hide();
@@ -129,6 +135,9 @@
       },
       onOptionClick() {
         this.showOptionPopup = false;
+      },
+      filterProducts(category) {
+        return this.products.filter(v => v.category === category);
       }
     }
   }
