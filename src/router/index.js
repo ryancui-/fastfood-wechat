@@ -85,6 +85,18 @@ router.beforeEach((to, from, next) => {
     } else {
       store.commit('updateDirection', {direction: ''});
     }
+
+    // 第一次进入不同页面时，historyStack 会相应压入不同页面
+    if (historyStack.length === 0) {
+      var matches;
+      if (matches = to.path.match(/\/orders\/(.*)/)) {
+        historyStack.push('/main/groups');
+      } else if (matches = to.path.match(/\/products\/group\/(.*)/)) {
+        historyStack.push('/main/groups');
+        historyStack.push(`/orders/${matches[1]}`);
+      }
+    }
+
     historyStack.push(to.path);
   }
   console.log('After', historyStack);

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="groups-block">
     <div v-if="groups.length === 0" class="none-tips">
       不存在的
     </div>
@@ -53,6 +53,16 @@
 </script>
 
 <style scoped>
+  .groups-block {
+    position: absolute;
+    top: 0;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .group {
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;
