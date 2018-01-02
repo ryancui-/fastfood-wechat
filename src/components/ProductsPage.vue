@@ -135,6 +135,16 @@
 </script>
 
 <style scoped>
+  .product-list {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .order-block {
     background-color: #fff;
     margin: 0 auto;

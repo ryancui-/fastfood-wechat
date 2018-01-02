@@ -18,22 +18,24 @@
       <div v-if="orders.length === 0" class="none-tips">
         不存在的
       </div>
-      <group v-for="order in orders" :key="order.user.id">
-        <div slot="title" class="order-user">
-          <f-avatar :src="order.user.avatar_url" :size="2"></f-avatar>
-          <span style="flex: 1;margin-left: 0.5rem;">{{order.user.username}}</span>
-          <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{order.totalPrice}}</span>
-        </div>
-        <cell v-for="row in order.rows"
-              :key="row.id"
-              :title="row.product_name"
-              @click.native="confirmDelete(row)">
-          <div>
-            <span>× {{row.quantity}} = </span>
-            <span>{{'￥' + row.total_price}}</span>
+      <div class="orders-block">
+        <group v-for="order in orders" :key="order.user.id">
+          <div slot="title" class="order-user">
+            <f-avatar :src="order.user.avatar_url" :size="2"></f-avatar>
+            <span style="flex: 1;margin-left: 0.5rem;">{{order.user.username}}</span>
+            <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{order.totalPrice}}</span>
           </div>
-        </cell>
-      </group>
+          <cell v-for="row in order.rows"
+                :key="row.id"
+                :title="row.product_name"
+                @click.native="confirmDelete(row)">
+            <div>
+              <span>× {{row.quantity}} = </span>
+              <span>{{'￥' + row.total_price}}</span>
+            </div>
+          </cell>
+        </group>
+      </div>
     </div>
   </div>
 </template>
@@ -68,11 +70,7 @@
     methods: {
       // 加载订单团详情
       getGroupDetail() {
-        this.$vux.loading.show({
-          text: '加载中'
-        });
         groupService.getGroupDetail(this.groupId).then(({data}) => {
-          this.$vux.loading.hide();
           this.group = data;
           this.initOrders(data.orders);
         });
@@ -130,10 +128,12 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  $preview-height: 110px;
+
   .group-overview {
+    height: $preview-height;
     padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
     box-shadow: #e2e2e2 0 0.5rem 0.5rem;
     background-color: white;
   }
@@ -150,6 +150,16 @@
     margin-left: 1rem;
     margin-right: 1rem;
     margin-top: 20px;
+  }
+
+  .orders-block {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    top: $preview-height + 30px;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .none-tips {

@@ -38,12 +38,7 @@
     methods: {
       // 获取订单团列表
       listActiveGroup() {
-        this.$vux.loading.show({
-          text: '加载中'
-        });
-
         groupService.listActiveGroup().then(({errno, data}) => {
-          this.$vux.loading.hide();
           if (errno === 0) {
             this.groups = data;
           }
