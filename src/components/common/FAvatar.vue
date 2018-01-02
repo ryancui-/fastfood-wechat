@@ -5,14 +5,14 @@
 
 <script>
   export default {
-    props: ['size', 'src'],
+    props: ['size', 'src', 'unit'],
     data() {
       return {
         pathname: process.env.ASSET_ROOT,
         styleObj: {
-          width: this.size + 'rem',
-          height: this.size + 'rem',
-          'border-radius': this.size / 2 + 'rem'
+          width: this.size + (this.unit || 'rem'),
+          height: this.size + (this.unit || 'rem'),
+          'border-radius': this.size / 2 + (this.unit || 'rem')
         }
       }
     }
