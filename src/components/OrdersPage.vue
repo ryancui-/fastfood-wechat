@@ -51,12 +51,15 @@
     components: {
       XHeader, Group, Cell, FAvatar
     },
+    beforeRouteEnter (to, from, next) {
+      groupService.getGroupDetail(to.params.groupId).then(({data}) => {
+        next(vm => vm.setGroupData(data));
+      }, err => {
+        next(false);
+      });
+    },
     created() {
       this.$store.commit('setMainTitle', '订单团');
-
-      this.groupId = this.$route.params.groupId;
-      this.$store.commit('updateGroupId', {groupId: this.groupId});
-      this.getGroupDetail();
     },
     data() {
       return {
@@ -68,12 +71,11 @@
       }
     },
     methods: {
-      // 加载订单团详情
-      getGroupDetail() {
-        groupService.getGroupDetail(this.groupId).then(({data}) => {
-          this.group = data;
-          this.initOrders(data.orders);
-        });
+      setGroupData(data) {
+        this.groupId = data.id;
+        this.$store.commit('updateGroupId', {groupId: this.groupId});
+        this.group = data;
+        this.initOrders(data.orders);
       },
       // 按人初始化订单
       initOrders(orders) {
