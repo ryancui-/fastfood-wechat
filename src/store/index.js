@@ -18,7 +18,10 @@ const store = new Vuex.Store({
     mainTitle: '',
 
     // 已选择的订单团ID
-    groupId: null
+    groupId: null,
+
+    // 新建订单团的数据
+    newGroupData: {}
   },
   mutations: {
     updateDirection(state, payload) {
@@ -49,6 +52,11 @@ const store = new Vuex.Store({
     // 更新订单团ID
     updateGroupId(state, payload) {
       state.groupId = payload.groupId;
+    },
+
+    // 设置新建订单团的数据
+    setNewGroupData(state, payload) {
+      state.newGroupData = payload;
     }
   }
 });

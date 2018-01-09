@@ -8,6 +8,7 @@ import GroupsPage from '@/components/GroupsPage';
 import ProfilePage from '@/components/ProfilePage';
 import OrdersPage from '@/components/OrdersPage';
 import ProductsPage from '@/components/ProductsPage';
+import CreateGroupPage from '@/components/CreateGroup';
 
 import profileService from '@/api/profile';
 import authService from '@/api/auth';
@@ -39,6 +40,9 @@ const routes = [{
 }, {
   path: '/products/group/:groupId',
   component: ProductsPage
+}, {
+  path: '/createGroup',
+  component: CreateGroupPage
 }];
 
 const router = new Router({

@@ -16,6 +16,15 @@ class GroupService extends BaseService {
   getGroupDetail(groupId) {
     return this.get(`/group/get?id=${groupId}`);
   }
+
+  /**
+   * 新建订单团
+   * @param group
+   * @return {*}
+   */
+  addGroup(group) {
+    return this.post('/group/add', group);
+  }
 }
 
 export default new GroupService();

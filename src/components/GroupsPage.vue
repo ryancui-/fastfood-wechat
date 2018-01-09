@@ -89,7 +89,7 @@
        * 跳转到新建订单团页面
        */
       navigateToCreateGroup() {
-
+        this.$router.push('/createGroup');
       }
     }
   }
