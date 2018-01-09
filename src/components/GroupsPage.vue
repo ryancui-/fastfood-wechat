@@ -12,11 +12,17 @@
         </div>
         <div class="group-main">
           <span class="group-name">{{group.name}}</span>
-          <div class="group-due">
+          <div v-if="formatDueTime(group.due_time) > 0" class="group-due">
             离截止时间还有<span style="color: red;">{{formatDueTime(group.due_time)}}</span>分钟
           </div>
+          <div v-if="formatDueTime(group.due_time) < 0 && group.status === 1" class="group-due">
+            已经截止啦~
+          </div>
         </div>
-        <div class="group-status">
+        <div class="group-status"
+             :style="{
+               color: group.status === 1 ? '#09BB07' : (group.status === 2 ? 'blue' : 'red')
+             }">
           <span>{{formatStatus(group.status)}}</span>
         </div>
       </div>
@@ -50,7 +56,7 @@
     methods: {
       // 获取订单团列表
       listActiveGroup() {
-        groupService.listActiveGroup().then(({errno, data}) => {
+        groupService.listGroup().then(({errno, data}) => {
           if (errno === 0) {
             this.groups = data;
           }
@@ -152,7 +158,6 @@
 
     .group-status {
       width: 70px;
-      color: #09BB07;
       font-size: 17px;
       text-align: right;
     }
