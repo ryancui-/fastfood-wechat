@@ -9,8 +9,9 @@
       <div class="group-line">
         <span>{{group.name}}</span>
       </div>
-      <div class="group-line">
+      <div class="group-line" style="justify-content: space-between;">
         <span>截止时间：{{group.due_time}}</span>
+        <span :style="getGroupStatusStyleObj(group.status)">{{formatGroupStatus(group.status)}}</span>
       </div>
     </div>
 
@@ -50,8 +51,10 @@
   import FAvatar from '@/components/common/FAvatar';
   import groupService from '@/api/group';
   import orderService from '@/api/order';
+  import groupStatusMixin from '@/mixins/group-status';
 
   export default {
+    mixins: [groupStatusMixin],
     components: {
       XHeader, Group, Cell, FAvatar, Actionsheet
     },
@@ -109,7 +112,7 @@
       },
       // 确认是否删除订单
       confirmDelete(order) {
-        if (order.user_id !== this.user.id) {
+        if (order.user_id !== this.user.id || this.group.status !== 1) {
           return;
         }
 

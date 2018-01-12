@@ -20,10 +20,8 @@
           </div>
         </div>
         <div class="group-status"
-             :style="{
-               color: group.status === 1 ? '#09BB07' : (group.status === 2 ? 'blue' : 'red')
-             }">
-          <span>{{formatStatus(group.status)}}</span>
+             :style="getGroupStatusStyleObj(group.status)">
+          <span>{{formatGroupStatus(group.status) + '！'}}</span>
         </div>
       </div>
     </div>
@@ -38,8 +36,10 @@
   import { XButton } from 'vux';
   import groupService from '@/api/group';
   import FAvatar from '@/components/common/FAvatar';
+  import groupStatusMixin from '@/mixins/group-status';
 
   export default {
+    mixins: [groupStatusMixin],
     components: {
       FAvatar, XButton
     },
@@ -54,28 +54,15 @@
       }
     },
     methods: {
-      // 获取订单团列表
+      /**
+       * 获取订单团列表
+       */
       listActiveGroup() {
         groupService.listGroup().then(({errno, data}) => {
           if (errno === 0) {
             this.groups = data;
           }
         });
-      },
-      /**
-       * 格式化订单团状态
-       * @param status
-       * @return {*}
-       */
-      formatStatus(status) {
-        switch (status) {
-          case 1:
-            return '征集中！';
-          case 2:
-            return '已完成！';
-          case 3:
-            return '已取消！';
-        }
       },
       /**
        * 格式化过期时间
