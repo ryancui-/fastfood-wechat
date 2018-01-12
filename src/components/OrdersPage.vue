@@ -1,69 +1,74 @@
 <template>
   <div>
-    <div>
-      <div class="group-overview">
-        <div class="group-line">
-          <f-avatar :src="group.composer.avatar_url" :size="2"></f-avatar>
-          <span style="flex: 1;margin-left: 0.5rem;">{{group.composer.username}}</span>
-          <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{group.totalPrice}}</span>
-        </div>
-        <div class="group-line">
-          <span>{{group.name}}</span>
-        </div>
-        <div class="group-line">
-          <span>截止时间：{{group.due_time}}</span>
-        </div>
+    <div class="group-overview" @click="showActionSheet()">
+      <div class="group-line">
+        <f-avatar :src="group.composer.avatar_url" :size="2"></f-avatar>
+        <span style="flex: 1;margin-left: 0.5rem;">{{group.composer.username}}</span>
+        <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{group.totalPrice}}</span>
       </div>
-
-      <div v-if="orders.length === 0" class="none-tips">
-        不存在的
+      <div class="group-line">
+        <span>{{group.name}}</span>
       </div>
-      <div class="orders-block">
-        <group v-for="order in orders" :key="order.user.id">
-          <div slot="title" class="order-user">
-            <f-avatar :src="order.user.avatar_url" :size="2"></f-avatar>
-            <span style="flex: 1;margin-left: 0.5rem;">{{order.user.username}}</span>
-            <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{order.totalPrice}}</span>
-          </div>
-          <cell v-for="row in order.rows"
-                :key="row.id"
-                :title="row.product_name"
-                @click.native="confirmDelete(row)">
-            <div>
-              <span>× {{row.quantity}} = </span>
-              <span>{{'￥' + row.total_price}}</span>
-            </div>
-          </cell>
-        </group>
+      <div class="group-line">
+        <span>截止时间：{{group.due_time}}</span>
       </div>
     </div>
+
+    <div v-if="orders.length === 0" class="none-tips">
+      不存在的
+    </div>
+    <div class="orders-block">
+      <group v-for="order in orders" :key="order.user.id">
+        <div slot="title" class="order-user">
+          <f-avatar :src="order.user.avatar_url" :size="2"></f-avatar>
+          <span style="flex: 1;margin-left: 0.5rem;">{{order.user.username}}</span>
+          <span style="color: red;width: 100px;font-size: 1.2rem;text-align: right;">￥{{order.totalPrice}}</span>
+        </div>
+        <cell v-for="row in order.rows"
+              :key="row.id"
+              :title="row.product_name"
+              @click.native="confirmDelete(row)">
+          <div>
+            <span>× {{row.quantity}} = </span>
+            <span>{{'￥' + row.total_price}}</span>
+          </div>
+        </cell>
+      </group>
+    </div>
+
+    <!-- ActionSheet -->
+    <actionsheet v-model="showAction"
+                 :menus="statusMenus"
+                 theme="android"
+                 @on-click-menu="changeGroupStatus"></actionsheet>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import { XHeader, Group, Cell } from 'vux';
+  import { XHeader, Group, Cell, Actionsheet } from 'vux';
   import FAvatar from '@/components/common/FAvatar';
   import groupService from '@/api/group';
   import orderService from '@/api/order';
 
   export default {
     components: {
-      XHeader, Group, Cell, FAvatar
-    },
-    beforeRouteEnter (to, from, next) {
-      groupService.getGroupDetail(to.params.groupId).then(({data}) => {
-        next(vm => vm.setGroupData(data));
-      }, err => {
-        next(false);
-      });
+      XHeader, Group, Cell, FAvatar, Actionsheet
     },
     created() {
       this.$store.commit('setMainTitle', '订单团');
+      this.refreshGroupData(this.$route.params.groupId);
     },
     data() {
       return {
-        groupId: null,
+        showAction: false,
+        statusMenus: [{
+          label: '下单成功',
+          value: '2'
+        }, {
+          label: '下单失败',
+          value: '3'
+        }],
         group: {
           composer: {}
         },
@@ -71,11 +76,12 @@
       }
     },
     methods: {
-      setGroupData(data) {
-        this.groupId = data.id;
-        this.$store.commit('updateGroupId', {groupId: this.groupId});
-        this.group = data;
-        this.initOrders(data.orders);
+      refreshGroupData(groupId) {
+        groupService.getGroupDetail(groupId).then(({data}) => {
+          this.$store.commit('updateGroup', data);
+          this.group = data;
+          this.initOrders(data.orders);
+        });
       },
       // 按人初始化订单
       initOrders(orders) {
@@ -121,6 +127,23 @@
               }
             });
           }
+        });
+      },
+      /**
+       * 判断是否是订单团创建人且为征集中状态才能改变状态
+       */
+      showActionSheet() {
+        if (this.group.composer.id === this.user.id && this.group.status === 1) {
+          this.showAction = true;
+        }
+      },
+      /**
+       * 改变订单团状态
+       */
+      changeGroupStatus(menuKey) {
+        groupService.changeStatus(this.group.id, menuKey).then(data => {
+          this.$vux.toast.text('更改成功', 'bottom');
+          this.refreshGroupData(this.group.id);
         });
       }
     },

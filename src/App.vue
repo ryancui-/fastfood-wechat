@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <x-header :left-options="showBackOption" :title="mainTitle" v-if="url !== '/login'">
-      <div v-if="url.startsWith('/orders')" slot="right" @click="navigateToProducts()">
+      <div v-if="url.startsWith('/orders') && group.status === 1" slot="right" @click="navigateToProducts()">
         <span>点餐</span>
       </div>
       <div v-if="url.startsWith('/createGroup') && newGroupData.groupName" slot="right" @click="confirmCreateGroup()">
@@ -30,7 +30,7 @@
        * 跳转至菜单页面
        */
       navigateToProducts() {
-        this.$router.push(`/products/group/${this.$store.state.groupId}`);
+        this.$router.push(`/products/group/${this.$store.state.group.id}`);
       },
       /**
        * 确认新建订单团
@@ -89,7 +89,7 @@
         }
       },
       ...mapState([
-        'mainTitle', 'newGroupData'
+        'mainTitle', 'newGroupData', 'group'
       ])
     }
   };

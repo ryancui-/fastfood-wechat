@@ -25,6 +25,17 @@ class GroupService extends BaseService {
   addGroup(group) {
     return this.post('/group/add', group);
   }
+
+  /**
+   * 更改订单团状态
+   * @param groupId
+   * @param status
+   */
+  changeStatus(groupId, status) {
+    return this.post('/group/status', {
+      id: groupId, status
+    });
+  }
 }
 
 export default new GroupService();

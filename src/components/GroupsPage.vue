@@ -12,7 +12,7 @@
         </div>
         <div class="group-main">
           <span class="group-name">{{group.name}}</span>
-          <div v-if="formatDueTime(group.due_time) > 0" class="group-due">
+          <div v-if="formatDueTime(group.due_time) > 0 && group.status === 1" class="group-due">
             离截止时间还有<span style="color: red;">{{formatDueTime(group.due_time)}}</span>分钟
           </div>
           <div v-if="formatDueTime(group.due_time) < 0 && group.status === 1" class="group-due">

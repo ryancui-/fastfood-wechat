@@ -17,8 +17,8 @@ const store = new Vuex.Store({
     // 主界面 title
     mainTitle: '',
 
-    // 已选择的订单团ID
-    groupId: null,
+    // 已选择的订单团内容
+    group: {},
 
     // 新建订单团的数据
     newGroupData: {}
@@ -50,8 +50,8 @@ const store = new Vuex.Store({
     },
 
     // 更新订单团ID
-    updateGroupId(state, payload) {
-      state.groupId = payload.groupId;
+    updateGroup(state, payload) {
+      state.group = payload;
     },
 
     // 设置新建订单团的数据
