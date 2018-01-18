@@ -43,6 +43,8 @@
 
   #app {
     height: 100%;
+    background-image: url('../static/img/bg.png');
+    background-size: 100%;
   }
 
   .router-out-enter-active,

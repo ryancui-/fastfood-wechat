@@ -1,6 +1,12 @@
 $button-height: 46px;
-$theme-color: #FEC640;
 
+$theme-color: #FEC640;
+$black-color: #323232;
+$grey-color: #999999;
+$shadow-color: rgba(0, 0, 0, 0.15);
+$white-color: #ffffff;
+
+// 按钮样式
 .ff-btn {
   height: $button-height;
   background-color: $theme-color;

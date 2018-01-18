@@ -128,8 +128,8 @@
     width: 90vw;
     padding: 18px 15px;
     margin: 10px auto;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-    background-color: white;
+    box-shadow: 0 1px 3px $shadow-color;
+    background-color: $white-color;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -152,7 +152,7 @@
         width: 50px;
         word-wrap: break-word;
         font-size: 11px;
-        color: #999999;
+        color: $grey-color;
         text-align: center;
         line-height: 11px;
         padding-top: 4px;
@@ -166,11 +166,11 @@
       margin-left: 15px;
       .group-name {
         font-size: 17px;
-        color: #323232;
+        color: $black-color;
       }
       .group-due {
         font-size: 13px;
-        color: #999999;
+        color: $grey-color;
       }
     }
 
@@ -188,7 +188,7 @@
     align-items: center;
     .none-text {
       font-size: 17px;
-      color: #999999;
+      color: $grey-color;
     }
   }
 
@@ -211,7 +211,7 @@
     margin: 0 auto;
     width: 90vw;
     .finish-group-date {
-      color: #999999;
+      color: $grey-color;
       font-size: 13px;
       margin: 5px 0 5px 10px;
     }
@@ -222,8 +222,9 @@
       justify-content: space-between;
       align-items: center;
       font-size: 17px;
-      color: #323232;
+      color: $black-color;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      background-color: $white-color;
       border-radius: 8px;
       box-sizing: border-box;
       margin-bottom: 10px;
