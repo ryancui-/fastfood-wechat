@@ -21,7 +21,6 @@
       Group, Cell, FAvatar
     },
     created() {
-      this.$store.commit('setMainTitle', '我的信息');
     },
     methods: {
       logout() {

@@ -33,10 +33,7 @@
     computed: {
       url() {
         return this.$route.fullPath;
-      },
-      ...mapState([
-        'mainTitle'
-      ])
+      }
     }
   }
 </script>

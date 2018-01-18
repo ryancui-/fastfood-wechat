@@ -32,7 +32,6 @@
       Group, XInput, PopupPicker, XButton
     },
     created() {
-      this.$store.commit('setMainTitle', '新建订单团');
     },
     data() {
       return {

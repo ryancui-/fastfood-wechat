@@ -64,8 +64,6 @@
       XHeader, Group, Cell, Popup, XButton, InlineXNumber, Checker, CheckerItem
     },
     created() {
-      this.$store.commit('setMainTitle', '菜单');
-
       this.groupId = Number(this.$route.params.groupId);
       if (!this.groupId) {
         this.$vux.toast.text('没有选择订单团', 'bottom');

@@ -63,7 +63,6 @@
       XHeader, Group, Cell, FAvatar, Actionsheet
     },
     created() {
-      this.$store.commit('setMainTitle', '订单团');
       this.refreshGroupData(this.$route.params.groupId);
     },
     data() {

@@ -14,9 +14,6 @@ const store = new Vuex.Store({
     // user info
     user: {},
 
-    // 主界面 title
-    mainTitle: '',
-
     // 已选择的订单团内容
     group: {},
 
@@ -42,11 +39,6 @@ const store = new Vuex.Store({
     },
     resetUser(state) {
       state.user = {};
-    },
-
-    // 设置主界面 title
-    setMainTitle(state, payload) {
-      state.mainTitle = payload;
     },
 
     // 更新订单团ID

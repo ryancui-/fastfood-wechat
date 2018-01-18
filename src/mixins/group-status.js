@@ -2,10 +2,10 @@ const groupStatusEnum = [{
   label: '征集中',
   value: 1
 }, {
-  label: '已完成',
+  label: '结束了',
   value: 2
 }, {
-  label: '已取消',
+  label: '没订到',
   value: 3
 }];
 
@@ -14,10 +14,10 @@ const groupStatusStyle = [{
   color: '#09BB07'
 }, {
   status: 2,
-  color: '#2624a8'
+  color: '#3432e6'
 }, {
   status: 3,
-  color: '#c51c21'
+  color: '#FF5253'
 }];
 
 export default {
