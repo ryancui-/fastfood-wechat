@@ -35,7 +35,7 @@
           {{formatFinishGroupTime(finishGroup.create_time)}}
         </div>
         <div class="finish-orders" v-for="order in finishGroup.orders">
-          <span>{{order.product_name}}</span>
+          <span>{{order.product_name + (order.quantity === 1 ? '' : '×' + order.quantity)}}</span>
           <span>￥{{order.total_price}}</span>
         </div>
       </div>
