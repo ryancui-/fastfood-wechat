@@ -29,7 +29,9 @@
     <div v-if="orders.length === 0" class="none-tips">
       不存在的
     </div>
-    <div class="orders-block">
+    <div class="orders-block" :style="{
+        'bottom': group.status === 1 ? '50px' : '0'
+      }">
       <div class="user-order" v-for="order in orders" :key="order.user.id">
         <div class="user-detail">
           <f-avatar :src="order.user.avatar_url" :size="25" unit="px"></f-avatar>
@@ -43,7 +45,7 @@
       </div>
     </div>
 
-    <div class="ff-btn bottom-btn" @click="navigateToProducts()">
+    <div class="ff-btn bottom-btn" @click="navigateToProducts()" v-if="group.status === 1">
       <span>我也要点</span>
     </div>
 
@@ -263,7 +265,6 @@
     top: 155px;
     left: 0;
     right: 0;
-    bottom: 50px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     .user-order {
