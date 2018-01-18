@@ -120,7 +120,7 @@
   .router-in-leave-active {
     will-change: transform;
     transition: all 500ms;
-    height: 100%;
+    bottom: 0;
     top: 46px;
     width: 100%;
     position: absolute;
