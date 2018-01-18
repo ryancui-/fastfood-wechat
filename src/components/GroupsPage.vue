@@ -34,7 +34,7 @@
         <div class="finish-group-date">
           {{formatFinishGroupTime(finishGroup.create_time)}}
         </div>
-        <div class="finish-orders" v-for="order in finishGroup.orders">
+        <div class="finish-orders" v-for="order in finishGroup.orders" v-if="order.user_id === user.id">
           <span>{{order.product_name + (order.quantity === 1 ? '' : '×' + order.quantity)}}</span>
           <span>￥{{order.total_price}}</span>
         </div>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import { XButton } from 'vux';
   import groupService from '@/api/group';
   import FAvatar from '@/components/common/FAvatar';
@@ -106,6 +107,9 @@
       navigateToCreateGroup() {
         this.$router.push('/createGroup');
       }
+    },
+    computed: {
+      ...mapState(['user'])
     }
   }
 </script>
