@@ -38,7 +38,7 @@
           <span class="user-name">{{order.user.username}}</span>
           <span class="user-price">￥{{order.totalPrice}}</span>
         </div>
-        <div class="order-detail" v-for="row in order.rows" :key="row.id">
+        <div class="order-detail" v-for="row in order.rows" :key="row.id" @click="confirmDelete(row)">
           <span>{{row.product_name}}</span>
           <span>￥{{row.total_price}}</span>
         </div>
