@@ -37,6 +37,10 @@
       </group>
     </div>
 
+    <div class="ff-btn bottom-btn" @click="navigateToProducts()">
+      <span>点餐</span>
+    </div>
+
     <!-- ActionSheet -->
     <actionsheet v-model="showAction"
                  :menus="statusMenus"
@@ -148,6 +152,12 @@
           this.$vux.toast.text('更改成功', 'bottom');
           this.refreshGroupData(this.group.id);
         });
+      },
+      /**
+       * 跳转至菜单页面
+       */
+      navigateToProducts() {
+        this.$router.push(`/products/group/${this.$store.state.group.id}`);
       }
     },
     computed: {
@@ -157,6 +167,8 @@
 </script>
 
 <style scoped lang="scss">
+  @import 'src/styles/custom.scss';
+
   $preview-height: 110px;
 
   .group-overview {
@@ -195,5 +207,11 @@
     font-size: 1rem;
     color: #aaa;
     padding: 20px;
+  }
+
+  .bottom-btn {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 </style>

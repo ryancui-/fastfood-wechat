@@ -1,0 +1,15 @@
+$button-height: 46px;
+$theme-color: #FEC640;
+
+.ff-btn {
+  height: $button-height;
+  background-color: $theme-color;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  &:hover {
+    cursor: pointer;
+  }
+}
