@@ -64,7 +64,6 @@
     },
     data() {
       return {
-        pathname: process.env.ASSET_ROOT,
         groups: [],
         finishGroups: []
       }

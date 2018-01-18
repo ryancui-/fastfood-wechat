@@ -8,7 +8,6 @@
     props: ['size', 'src', 'unit'],
     data() {
       return {
-        pathname: process.env.ASSET_ROOT,
         styleObj: {
           width: this.size + (this.unit || 'rem'),
           height: this.size + (this.unit || 'rem'),

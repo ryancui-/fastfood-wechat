@@ -36,6 +36,14 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
+Vue.mixin({
+  data() {
+    return {
+      pathname: process.env.ASSET_ROOT
+    };
+  }
+});
+
 /* eslint-disable no-new */
 new Vue({
   router,
