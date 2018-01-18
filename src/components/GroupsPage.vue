@@ -29,7 +29,6 @@
       <span>发起团</span>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -94,7 +93,7 @@
   .groups-block {
     position: absolute;
     top: 0;
-    bottom: 50px + $create-button-height;
+    bottom: $create-button-height;
     left: 0;
     right: 0;
     overflow-y: auto;
@@ -152,7 +151,7 @@
 
   .create-btn {
     position: absolute;
-    bottom: 50px;
+    bottom: 0;
     left: 0;
     right: 0;
     height: $create-button-height;
