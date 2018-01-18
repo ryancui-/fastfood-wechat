@@ -38,10 +38,10 @@
     </div>
 
     <div class="ff-btn bottom-btn" @click="navigateToProducts()">
-      <span>点餐</span>
+      <span>我也要点</span>
     </div>
 
-    <!-- ActionSheet -->
+    <!-- 更改团组状态 -->
     <actionsheet v-model="showAction"
                  :menus="statusMenus"
                  theme="android"
@@ -84,7 +84,6 @@
     methods: {
       refreshGroupData(groupId) {
         groupService.getGroupDetail(groupId).then(({data}) => {
-          this.$store.commit('updateGroup', data);
           this.group = data;
           this.initOrders(data.orders);
         });
@@ -156,7 +155,7 @@
        * 跳转至菜单页面
        */
       navigateToProducts() {
-        this.$router.push(`/products/group/${this.$store.state.group.id}`);
+        this.$router.push(`/products/group/${this.group.id}`);
       }
     },
     computed: {

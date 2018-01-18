@@ -6,14 +6,12 @@
                text-align="right"
                v-model="groupName"
                :debounce="500"
-               :show-clear="false"
-               @on-change="commitValue()"></x-input>
+               :show-clear="false"></x-input>
       <popup-picker title="截止时间"
                     :data="dueTimeOptions"
                     v-model="dueTimeType"
                     :show-name="true"
-                    placeholder="选择截止时间"
-                    @on-change="commitValue()"></popup-picker>
+                    placeholder="选择截止时间"></popup-picker>
     </group>
 
     <div class="ff-btn" @click="confirmCreateGroup()">
@@ -35,6 +33,7 @@
     },
     data() {
       return {
+        groupData: null,
         dueTimeOptions: [[{
           name: '15分钟后',
           value: '1'
@@ -54,19 +53,13 @@
     },
     methods: {
       /**
-       * 向全局 store 提交当前输入值
-       */
-      commitValue(value) {
-        this.$store.commit('setNewGroupData', {
-          dueTimeType: this.dueTimeType[0],
-          groupName: this.groupName
-        });
-      },
-      /**
        * 确认新建订单团
        */
       confirmCreateGroup() {
-        const newGroupData = this.$store.state.newGroupData;
+        const newGroupData = {
+          dueTimeType: this.dueTimeType[0],
+          groupName: this.groupName
+        };
 
         // 转换新建团组数据
         const params = {

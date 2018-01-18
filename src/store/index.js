@@ -12,13 +12,7 @@ const store = new Vuex.Store({
     // JWT token
     token: '',
     // user info
-    user: {},
-
-    // 已选择的订单团内容
-    group: {},
-
-    // 新建订单团的数据
-    newGroupData: {}
+    user: {}
   },
   mutations: {
     updateDirection(state, payload) {
@@ -39,16 +33,6 @@ const store = new Vuex.Store({
     },
     resetUser(state) {
       state.user = {};
-    },
-
-    // 更新订单团ID
-    updateGroup(state, payload) {
-      state.group = payload;
-    },
-
-    // 设置新建订单团的数据
-    setNewGroupData(state, payload) {
-      state.newGroupData = payload;
     }
   }
 });
