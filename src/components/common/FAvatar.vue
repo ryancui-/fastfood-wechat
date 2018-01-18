@@ -1,5 +1,5 @@
 <template>
-  <img :src="src || `${pathname}static/avatar.png`" alt="头像"
+  <img :src="src || `${pathname}static/img/avatar.png`" alt="头像"
        :style="styleObj">
 </template>
 
