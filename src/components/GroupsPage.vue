@@ -3,7 +3,7 @@
     <sub-header class="group-sub-header" name="订单团"></sub-header>
     <div class="groups-block">
       <div v-if="groups.length === 0" class="group-none">
-        <img :src="`${pathname}static/no-group.png`" height="106">
+        <img :src="`${pathname}static/img/no-group.png`" height="106">
         <span class="none-text">暂时没有团噢！</span>
       </div>
 
