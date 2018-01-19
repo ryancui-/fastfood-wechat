@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="avatar-block">
-      <f-avatar :src="user.avatar_url" :size="5"></f-avatar>
-      <span style="margin-top: 1rem;">{{user.username}}</span>
+      <f-avatar :src="user.avatar_url" :size="90" unit="px"></f-avatar>
+      <span>{{user.username}}</span>
     </div>
     <group>
       <cell title="退出登录" :is-link="true" @click.native="logout"></cell>
@@ -36,13 +36,19 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import 'src/styles/custom.scss';
+
   .avatar-block {
-    margin: 50px 0;
+    margin: 30px 0 50px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 40%;
+    span {
+      margin-top: 10px;
+      font-size: 15px;
+      color: $black-color;
+    }
   }
 </style>
