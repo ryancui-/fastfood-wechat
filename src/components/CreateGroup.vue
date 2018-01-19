@@ -1,6 +1,6 @@
 <template>
   <div>
-    <group label-width="90px">
+    <group gutter="0" label-width="90px">
       <x-input title="标题"
                placeholder="输入标题"
                text-align="right"
@@ -14,7 +14,7 @@
                     placeholder="选择截止时间"></popup-picker>
     </group>
 
-    <div class="ff-btn" @click="confirmCreateGroup()">
+    <div class="ff-btn confirm-btn" @click="confirmCreateGroup()">
       <span>发起团</span>
     </div>
   </div>
@@ -96,4 +96,11 @@
 
 <style scoped lang="scss">
   @import 'src/styles/custom.scss';
+
+  .confirm-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 </style>
