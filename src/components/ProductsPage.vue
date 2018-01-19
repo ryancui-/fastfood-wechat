@@ -1,21 +1,20 @@
 <template>
   <div>
+    <img class="random-logo"
+         :src="`${pathname}static/img/random_logo.png`"
+         alt="点我随机选"
+         @click="navigateToRandom()">
+
     <div class="product-list">
-      <group v-for="category in productCategories"
-             :key="category"
-             :title="category">
-        <cell v-for="product in filterProducts(category)"
-              :key="product.id"
-              @click.native="showOrderAction(product)">
-          <div slot="title">
-            <span>{{product.name}}</span>
-            <span v-if="product.spicy">🌶</span>
-          </div>
-          <div>
-            <span>￥{{product.price}}</span>
-          </div>
-        </cell>
-      </group>
+      <div class="category" v-for="category in productCategories" :key="category">
+        <sub-header class="category-sub-header" :name="category"></sub-header>
+        <div class="product" v-for="product in filterProducts(category)"
+             :key="product.id"
+             @click="showOrderAction(product)">
+          <span>{{product.name + (product.spicy ? '🌶' : '')}}</span>
+          <span>￥{{product.price}}</span>
+        </div>
+      </div>
     </div>
 
     <popup v-model="showPopup" is-transparent>
@@ -56,12 +55,14 @@
 
 <script>
   import { XHeader, Group, Cell, Popup, XButton, InlineXNumber, Checker, CheckerItem } from 'vux';
+  import SubHeader from '@/components/common/SubHeader';
   import productService from '@/api/product';
   import orderService from '@/api/order';
 
   export default {
     components: {
-      XHeader, Group, Cell, Popup, XButton, InlineXNumber, Checker, CheckerItem
+      XHeader, Group, Cell, Popup, XButton,
+      InlineXNumber, Checker, CheckerItem, SubHeader
     },
     created() {
       this.groupId = Number(this.$route.params.groupId);
@@ -136,20 +137,54 @@
       },
       filterProducts(category) {
         return this.products.filter(v => v.category === category);
+      },
+      /**
+       * 跳转至抽奖页面
+       */
+      navigateToRandom() {
+
       }
     }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import 'src/styles/custom.scss';
+
+  .random-logo {
+    width: 100%;
+  }
+
   .product-list {
     position: absolute;
-    top: 0px;
+    top: 51px;
     left: 0;
     right: 0;
     bottom: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+
+    .category {
+      .category-sub-header {
+        margin: 10px 0;
+      }
+      .product {
+        width: 90vw;
+        margin: 0 auto;
+        height: 42px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 9px 15px 9px 10px;
+        background-color: white;
+        color: $black-color;
+        box-sizing: border-box;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px $shadow-color;
+        margin-bottom: 10px;
+        font-size: 17px;
+      }
+    }
   }
 
   .order-block {
