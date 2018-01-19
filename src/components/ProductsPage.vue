@@ -142,7 +142,7 @@
        * 跳转至抽奖页面
        */
       navigateToRandom() {
-
+        this.$vux.toast.text('设计师在玩NS<br>没时间出图', 'middle');
       }
     }
   }
