@@ -18,35 +18,25 @@
     </div>
 
     <popup v-model="showPopup" is-transparent>
-      <div class="order-block">
-        <div style="text-align: center;">
-          {{selectedProduct.name}}
+      <div class="popup-block">
+        <div class="order-block">
+          <span>{{selectedProduct.name}}</span>
+          <inline-x-number :min="1" width="50px" button-style="round"
+                           v-model="quantity"></inline-x-number>
         </div>
-        <group>
-          <cell title="数量">
-            <inline-x-number style="display:block;" :min="1" width="50px" button-style="round"
-                             v-model="quantity"></inline-x-number>
-          </cell>
-          <cell v-if="selectedProduct.product_options.length !== 0"
-                title="选项" :value="remark" is-link @click.native="showOptionPopup = !showOptionPopup;"></cell>
-          <cell title="总价" :value="'￥' + selectedProduct.price * quantity"></cell>
-        </group>
-        <div style="padding:20px 15px;">
-          <x-button type="primary" @click.native="confirmOrder">确定</x-button>
+        <div class="option-block" v-if="selectedProduct.product_options.length > 0">
+          <checker
+            v-model="remark"
+            default-item-class="option-item"
+            selected-item-class="option-item-selected">
+            <checker-item v-for="option in selectedProduct.product_options" :key="option.id"
+                          :value="option.option_name">{{ option.option_name }}
+            </checker-item>
+          </checker>
         </div>
-      </div>
-    </popup>
-
-    <popup v-model="showOptionPopup" is-transparent>
-      <div class="option-block">
-        <checker
-          v-model="remark"
-          default-item-class="option-item"
-          selected-item-class="option-item-selected">
-          <checker-item v-for="option in selectedProduct.product_options" :key="option.id"
-                        :value="option.option_name" @on-item-click="onOptionClick()">{{ option.option_name }}
-          </checker-item>
-        </checker>
+        <div class="ff-btn" @click="confirmOrder()">
+          <span>确认</span>
+        </div>
       </div>
     </popup>
   </div>
@@ -132,9 +122,6 @@
           }
         });
       },
-      onOptionClick() {
-        this.showOptionPopup = false;
-      },
       filterProducts(category) {
         return this.products.filter(v => v.category === category);
       },
@@ -187,29 +174,41 @@
     }
   }
 
-  .order-block {
-    background-color: #fff;
-    margin: 0 auto;
-    padding-top: 10px;
+  // 弹出框样式
+  .popup-block {
+    background-color: #4A4A4A;
+    .order-block, .option-block {
+      padding: 15px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    .option-block {
+      margin: 11px 16px;
+      padding: 0;
+      padding-top: 11px;
+      margin-top: 0;
+      border-top: 1px #979797 solid;
+    }
   }
 
-  .option-block {
-    background-color: rgb(238, 238, 238);
-    padding: 1rem;
-    height: 50px;
-  }
-
+  // 选项样式
   .option-item {
-    background-color: #ddd;
-    color: #222;
-    padding: 5px 10px;
-    margin-right: 10px;
-    line-height: 18px;
-    border-radius: 15px;
+    background-color: transparent;
+    color: $white-color;
+    padding: 3px 22px;
+    margin-right: 14px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px $white-color solid;
   }
 
   .option-item-selected {
-    background-color: #FF3B3B;
-    color: #fff;
+    background-color: $theme-color;
+    color: $black-color;
   }
 </style>

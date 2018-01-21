@@ -155,7 +155,7 @@
             orderService.remove(order.id).then(res => {
               if (res.errno === 0) {
                 that.$vux.toast.text('删除成功', 'middle');
-                that.getGroupDetail();
+                that.refreshGroupData(that.group.id);
               }
             });
           }
