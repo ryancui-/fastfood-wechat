@@ -21,8 +21,11 @@
       <div class="popup-block">
         <div class="order-block">
           <span>{{selectedProduct.name}}</span>
-          <inline-x-number :min="1" width="50px" button-style="round"
-                           v-model="quantity"></inline-x-number>
+          <div class="number-selector">
+            <span class="minus-btn number-btn" @click="minus()">－</span>
+            <span class="content">{{quantity}}</span>
+            <span class="plus-btn number-btn" @click="plus()">＋</span>
+          </div>
         </div>
         <div class="option-block" v-if="selectedProduct.product_options.length > 0">
           <checker
@@ -71,7 +74,6 @@
         groupId: null,
         products: [],
         showPopup: false,
-        showOptionPopup: false,
         selectedProduct: {
           product_options: []
         },
@@ -130,6 +132,12 @@
        */
       navigateToRandom() {
         this.$vux.toast.text('设计师在玩NS<br>没时间出图', 'middle');
+      },
+      minus() {
+        this.quantity === 1 ? null : this.quantity--;
+      },
+      plus() {
+        this.quantity++;
       }
     }
   }
@@ -192,6 +200,37 @@
       padding-top: 11px;
       margin-top: 0;
       border-top: 1px #979797 solid;
+    }
+  }
+
+  // 数字选择框样式
+  .number-selector {
+    display: flex;
+    align-items: center;
+    .number-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+    }
+    .minus-btn {
+      border: 1px solid $white-color;
+      color: $white-color;
+      background-color: transparent;
+    }
+    .plus-btn {
+      border: 1px solid $theme-color;
+      color: $black-color;
+      background-color: $theme-color;
+    }
+    .content {
+      font-size: 18px;
+      background-color: transparent;
+      width: 40px;
+      color: $white-color;
+      text-align: center;
     }
   }
 
