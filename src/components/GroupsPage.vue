@@ -14,11 +14,8 @@
         </div>
         <div class="group-main">
           <span class="group-name">{{group.name}}</span>
-          <div v-if="formatDueTime(group.due_time) > 0 && group.status === 1" class="group-due">
-            离截止时间还有<span style="color: red;">{{formatDueTime(group.due_time)}}</span>分钟
-          </div>
-          <div v-if="formatDueTime(group.due_time) < 0 && group.status === 1" class="group-due">
-            已经截止啦~
+          <div class="group-due">
+            {{formatDueTime(group.due_time)}}
           </div>
         </div>
         <div class="group-status"
@@ -50,6 +47,8 @@
 <script>
   import { mapState } from 'vuex';
   import { XButton } from 'vux';
+  import timeago from 'timeago.js';
+
   import groupService from '@/api/group';
   import FAvatar from '@/components/common/FAvatar';
   import SubHeader from '@/components/common/SubHeader';
@@ -87,7 +86,7 @@
        */
       formatDueTime(dueTime) {
         const date = new Date(dueTime.replace(/-/g, '/'));
-        return Math.floor((date.getTime() - Date.now()) / 1000 / 60);
+        return timeago().format(date, 'zh_CN');
       },
       /**
        * 格式化订单时间

@@ -2,7 +2,7 @@
   <div>
     <div class="group-overview" @click="showActionSheet()">
       <div class="group-deadline">
-        截止时间为{{group.due_time}}
+        截止时间为{{formatDueTime(group.due_time)}}
       </div>
       <div class="group">
         <div class="group-avatar">
@@ -11,11 +11,8 @@
         </div>
         <div class="group-main">
           <span class="group-name">{{group.name}}</span>
-          <div v-if="formatDueTime(group.due_time) > 0 && group.status === 1" class="group-due">
-            离截止时间还有<span style="color: red;">{{formatDueTime(group.due_time)}}</span>分钟
-          </div>
-          <div v-if="formatDueTime(group.due_time) <= 0 && group.status === 1" class="group-due">
-            已经截止啦~
+          <div class="group-due">
+            {{'设计师说这里是备注'}}
           </div>
         </div>
         <div class="group-status"
@@ -39,7 +36,7 @@
           <span class="user-price">￥{{order.totalPrice}}</span>
         </div>
         <div class="order-detail" v-for="row in order.rows" :key="row.id" @click="confirmDelete(row)">
-          <span>{{row.product_name}}</span>
+          <span>{{row.product_name + (row.quantity === 1 ? '' : '×' + row.quantity)}}</span>
           <span>￥{{row.total_price}}</span>
         </div>
       </div>
@@ -60,6 +57,8 @@
 <script>
   import { mapState } from 'vuex';
   import { XHeader, Group, Cell, Actionsheet } from 'vux';
+  import timeago from 'timeago.js';
+
   import FAvatar from '@/components/common/FAvatar';
   import SubHeader from '@/components/common/SubHeader';
   import groupService from '@/api/group';
@@ -132,11 +131,11 @@
        */
       formatDueTime(dueTime) {
         if (!dueTime) {
-          return 0;
+          return '';
         }
 
         const date = new Date(dueTime.replace(/-/g, '/'));
-        return Math.floor((date.getTime() - Date.now()) / 1000 / 60);
+        return timeago().format(date, 'zh_CN');
       },
       /**
        * 确认是否删除订单
