@@ -2,7 +2,7 @@
   <div>
     <div class="group-overview" @click="showActionSheet()">
       <div class="group-deadline">
-        截止时间为{{formatDueTime(group.due_time)}}
+        —截止时间为{{formatDueTime(group.due_time)}}—
       </div>
       <div class="group">
         <div class="group-avatar">
@@ -288,7 +288,7 @@
         background-color: transparent;
         display: flex;
         align-items: center;
-        margin: 9px 0;
+        margin: 3px 0 8px 0;
         color: $white-color;
       }
       .user-name {

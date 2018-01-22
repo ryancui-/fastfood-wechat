@@ -1,6 +1,8 @@
 <template>
   <div class="sub-header">
-    <span>{{name}}</span>
+    <span class="bar"></span>
+    <span class="title">{{name}}</span>
+    <span class="bar"></span>
   </div>
 </template>
 
@@ -19,10 +21,15 @@
     justify-content: center;
     align-items: center;
 
-    span {
+    .bar {
+      width: 3px;
+      height: 16px;
+      border-radius: 1.5px;
+      background-color: $theme-color;
+    }
+
+    .title {
       padding: 0 5px;
-      border-left: 3px solid $theme-color;
-      border-right: 3px solid $theme-color;
       font-size: 17px;
       color: $theme-color;
       line-height: 16px;
