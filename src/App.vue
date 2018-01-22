@@ -1,5 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" :style="{
+    'background-image': `url(${pathname}static/img/bg.png)`
+  }">
     <transition :name="viewTransition">
       <router-view class="main-content"></router-view>
     </transition>
@@ -43,7 +45,6 @@
 
   #app {
     height: 100%;
-    background-image: url('../static/img/bg.png');
     background-size: 100%;
   }
 
