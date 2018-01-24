@@ -60,7 +60,7 @@
     created() {
       this.groupId = Number(this.$route.params.groupId);
       if (!this.groupId) {
-        this.$vux.toast.text('没有选择订单团', 'bottom');
+        this.$vux.toast.text('你是怎么进来这里的，回去！', 'bottom');
         this.$router.back();
       }
 
@@ -131,7 +131,7 @@
        * 跳转至抽奖页面
        */
       navigateToRandom() {
-        this.$vux.toast.text('设计师在玩NS<br>没时间出图', 'middle');
+        this.$router.push('/products/random/' + this.groupId);
       },
       minus() {
         this.quantity === 1 ? null : this.quantity--;
