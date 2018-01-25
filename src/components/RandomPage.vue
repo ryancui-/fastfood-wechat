@@ -10,10 +10,18 @@
       <img class="machine" :src="`${pathname}static/img/random/machine.png`" alt="">
       <img v-if="!running" class="arrow" :src="`${pathname}static/img/random/arrow.png`" alt="">
     </div>
-    <div class="text-block"
-         :class="{'text-running': running}"
-         :style="{'background-image': `url(${pathname}static/img/random/text.png)`}">
+    <div class="text-block">
+      <div class="text-1"
+           :class="{'text-1-running': running}"
+           :style="{'background-image': `url(${pathname}static/img/random/text_1.png)`}"></div>
+      <div class="text-2"
+           :class="{'text-2-running': running}"
+           :style="{'background-image': `url(${pathname}static/img/random/text_2.png)`}"></div>
+      <div class="text-3"
+           :class="{'text-3-running': running}"
+           :style="{'background-image': `url(${pathname}static/img/random/text_3.png)`}"></div>
     </div>
+
     <div class="envelope-block">
       <img v-if="running" class="envelope" :class="{'envelope-running': running}"
            :src="`${pathname}static/img/random/envelope.png`" alt="">
@@ -67,6 +75,10 @@
        * 点击摇杆准备
        */
       onTouchStart(evt) {
+        if (this.running) {
+          return;
+        }
+
         this.startPoint = {
           x: evt.touches[0].clientX,
           y: evt.touches[0].clientY
@@ -84,7 +96,7 @@
        */
       onTouchEnd(evt) {
         const x = evt.changedTouches[0].clientX, y = evt.changedTouches[0].clientY;
-        if (this.pushed && Math.abs(x - this.startPoint.x) < 50 && y - this.startPoint.y > 100) {
+        if (!this.running && this.pushed && Math.abs(x - this.startPoint.x) < 50 && y - this.startPoint.y > 100) {
           this.pushed = false;
           this.running = true;
           this.randomChoose();
@@ -198,15 +210,48 @@
     height: 17vw;
     margin-top: 28vw;
     overflow: hidden;
-    background-position: 7vw -4vw;
-    background-repeat: repeat-y;
-    background-size: 59vw;
+    .text-1 {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8vw;
+      width: 15vw;
+      background-size: 15vw;
+      background-position: 0vw -25vw;
+    }
+    .text-2 {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 29.5vw;
+      width: 15vw;
+      background-size: 15vw;
+      background-position: 0vw -25vw;
+    }
+    .text-3 {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50.5vw;
+      width: 15vw;
+      background-size: 15vw;
+      background-position: 0vw -25vw;
+    }
+    .text-1-running {
+      transition: background-position 3s ease-out;
+      background-position: 0vw calc(-3vw - 15 * 24vw);
+    }
+    .text-2-running {
+      transition: background-position 3s 0.2s ease-out;
+      background-position: 0vw calc(-3vw - 15 * 24vw);
+    }
+    .text-3-running {
+      transition: background-position 3s 0.4s ease-out;
+      background-position: 0vw calc(-3vw - 15 * 24vw);
+    }
   }
 
-  .text-running {
-    transition: background-position 3s ease-out;
-    background-position: 7vw calc(-4vw - 15 * 24vw);
-  }
+
 
   .envelope-block {
     position: relative;
@@ -221,7 +266,7 @@
       transform: translateY(-100%);
     }
     .envelope-running {
-      animation: 1.5s 1.5s envelope-rolling linear forwards, 0.1s 3s envelope-open linear forwards;
+      animation: 2.5s 1.1s envelope-rolling linear forwards, 0.1s 3.6s envelope-open linear forwards;
     }
 
     @keyframes envelope-rolling {
@@ -308,11 +353,11 @@
   }
 
   .bg-running {
-    animation: 0.5s 3s bg-appear ease-out forwards;
+    animation: 0.5s 3.6s bg-appear ease-out forwards;
   }
 
   .result-running {
-    animation: 0.5s 3s result-open ease-out forwards;
+    animation: 0.5s 3.6s result-open ease-out forwards;
   }
 
   @keyframes bg-appear {
