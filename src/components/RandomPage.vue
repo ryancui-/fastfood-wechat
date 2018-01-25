@@ -22,7 +22,7 @@
     <div class="bg" :class="{'bg-running': running}" @click.self="stop()">
       <div class="result" :class="{'result-running': running}">
         <img :src="`${pathname}static/img/random/today.png`" alt="">
-        <span class="name">{{result}}</span>
+        <span class="name">{{result.name}}</span>
         <div class="btn" @click="confirmOrder()">
           <span>我点啦!</span>
         </div>
@@ -35,8 +35,17 @@
 </template>
 
 <script>
+  import ProductService from '@/api/product';
+  import OrderService from '@/api/order';
+
   export default {
     created() {
+      ProductService.listToday().then(res => {
+        // 只随机选饭
+        this.products = res.data.rows.filter(product => product.name.indexOf('饭') !== -1);
+        console.log(this.products);
+      });
+
       this.groupId = Number(this.$route.params.groupId);
       if (!this.groupId) {
         this.$vux.toast.text('你是怎么进来这里的，回去！', 'bottom');
@@ -46,7 +55,8 @@
     data() {
       return {
         running: false,
-        result: '啦啦啦啦啦啦啦',
+        products: null,
+        result: {},
         groupId: null,
         startPoint: {x: null, y: null},
         pushed: false,
@@ -77,6 +87,7 @@
         if (this.pushed && Math.abs(x - this.startPoint.x) < 50 && y - this.startPoint.y > 100) {
           this.pushed = false;
           this.running = true;
+          this.randomChoose();
         }
       },
       /**
@@ -85,7 +96,8 @@
       oneMoreTime() {
         this.running = false;
         setTimeout(() => {
-          this.running = true
+          this.running = true;
+          this.randomChoose();
         }, 200);
       },
       /**
@@ -98,7 +110,30 @@
        * 下订单了
        */
       confirmOrder() {
-        console.log(this.result);
+        this.$vux.loading.show({
+          text: '添加订单中'
+        });
+
+        const params = {
+          quantity: 1,
+          productId: this.result.id,
+          groupId: this.groupId
+        };
+
+        OrderService.add(params).then(res => {
+          this.$vux.loading.hide();
+          if (res.errno === 0) {
+            this.$vux.toast.text('添加订单成功', 'middle');
+            this.$router.go(-2);
+          }
+        });
+      },
+      /**
+       * 随机抽取菜单列表中的一个菜品
+       */
+      randomChoose() {
+        const index = Math.ceil(Math.random() * (this.products.length - 1));
+        this.result = this.products[index];
       }
     }
   }
