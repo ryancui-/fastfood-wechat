@@ -7,11 +7,15 @@
     <div class="login-form">
       <div class="form-row">
         <span class="form-label">账号</span>
-        <input type="text" v-model="params.username">
+        <div class="input-wrap">
+          <input type="text" v-model="params.username">
+        </div>
       </div>
       <div class="form-row">
         <span class="form-label">密码</span>
-        <input type="password" v-model="params.password">
+        <div class="input-wrap">
+          <input type="password" v-model="params.password">
+        </div>
       </div>
       <div class="register-link" @click="toRegister()">没有账号？这里注册！</div>
       <div class="ff-btn login-btn" @click="login()">
@@ -98,10 +102,13 @@
       }
       .form-label {
         color: $theme-color;
-        width: 100px;
+        width: 70px;
+      }
+      .input-wrap {
+        flex-grow: 1;
       }
       input {
-        flex-grow: 1;
+        width: 100%;
         outline: 0;
         border: 0;
         background-color: transparent;
