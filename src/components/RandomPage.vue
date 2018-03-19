@@ -1,11 +1,13 @@
 <template>
-  <div @touchstart="onTouchStart($event)" @touchend="onTouchEnd($event)">
+  <div>
     <div class="logo-text">
       <img :src="`${pathname}static/img/random/logo_text.png`" alt="">
     </div>
 
     <div class="main-block">
-      <img v-if="!running" class="stick-up" :src="`${pathname}static/img/random/stick_up.png`" alt="">
+      <img v-if="!running" class="stick-up"
+           @click="onRandomStart()"
+           :src="`${pathname}static/img/random/stick_up.png`" alt="">
       <img v-if="running" class="stick-down" :src="`${pathname}static/img/random/stick_down.png`" alt="">
       <img class="machine" :src="`${pathname}static/img/random/machine.png`" alt="">
       <img v-if="!running" class="arrow" :src="`${pathname}static/img/random/arrow.png`" alt="">
@@ -27,15 +29,16 @@
            :src="`${pathname}static/img/random/envelope.png`" alt="">
     </div>
 
-    <div class="bg" :class="{'bg-running': running}" @click.self="stop()">
+    <div class="bg" :class="{'bg-running': running}"
+         @click.self="stop()" @animationend="showResult = true">
       <div class="result" :class="{'result-running': running}">
         <img :src="`${pathname}static/img/random/today.png`" alt="">
         <span class="name">{{result.name}}</span>
         <div class="btn" @click="confirmOrder()">
           <span>我点啦!</span>
         </div>
-        <div class="one-more-time" @click="oneMoreTime()">
-          <span>不好，再来一次</span>
+        <div class="one-more-time">
+          <span @click="oneMoreTime()">不好，再来一次</span>
         </div>
       </div>
     </div>
@@ -68,45 +71,23 @@
         groupId: null,
         startPoint: {x: null, y: null},
         pushed: false,
+        showResult: false
       }
     },
     methods: {
-      /**
-       * 点击摇杆准备
-       */
-      onTouchStart(evt) {
-        if (this.running) {
-          return;
-        }
-
-        this.startPoint = {
-          x: evt.touches[0].clientX,
-          y: evt.touches[0].clientY
-        }
-
-        const xPersentage = this.startPoint.x / window.document.documentElement.clientWidth * 100;
-        const yPersentage = this.startPoint.y / window.document.documentElement.clientWidth * 100;
-
-        if (80 < xPersentage && xPersentage < 95 && 45 < yPersentage && yPersentage < 60) {
-          this.pushed = true;
-        }
-      },
-      /**
-       * 松开事件
-       */
-      onTouchEnd(evt) {
-        const x = evt.changedTouches[0].clientX, y = evt.changedTouches[0].clientY;
-        if (!this.running && this.pushed && Math.abs(x - this.startPoint.x) < 50 && y - this.startPoint.y > 100) {
-          this.pushed = false;
-          this.running = true;
-          this.randomChoose();
-        }
+      onRandomStart() {
+        this.running = true;
+        this.randomChoose();
       },
       /**
        * 再抽一次
        */
       oneMoreTime() {
-        this.running = false;
+        if (!this.showResult) {
+          return;
+        }
+
+        this.stop();
         setTimeout(() => {
           this.running = true;
           this.randomChoose();
@@ -117,11 +98,16 @@
        */
       stop() {
         this.running = false;
+        this.showResult = false;
       },
       /**
        * 下订单了
        */
       confirmOrder() {
+        if (!this.showResult) {
+          return;
+        }
+
         this.$vux.loading.show({
           text: '添加订单中'
         });
@@ -176,6 +162,7 @@
       left: 75vw;
       top: -8vw;
       width: 11vw;
+      z-index: 999;
     }
     .stick-down {
       position: absolute;
